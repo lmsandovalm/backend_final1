@@ -92,7 +92,7 @@ DATABASES = {
 
     'default': dj_database_url.config(
         # Replace this value with your local database's connection string.
-        default='postgresql://postgres:postgres@localhost:5432/mysite',
+        default='postgres://aprendix_database_user:dSagIU9xJVELphIXl5xUdxu8QWNEqmTd@dpg-cnljtsn79t8c73fo3c60-a.oregon-postgres.render.com/aprendix_database',
         conn_max_age=600
     )
 
