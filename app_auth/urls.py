@@ -5,6 +5,7 @@ from .models import *
 from rest_framework import routers
 
 router = routers.DefaultRouter()
+router.register(r'usuarios', CursoViewSet, basename='usuarios')
 router.register(r'cursos', CursoViewSet, basename='curso')
 router.register(r'tematicas', TematicaViewSet, basename='tematica')
 router.register(r'preguntas', PreguntaViewSet, basename='pregunta')
