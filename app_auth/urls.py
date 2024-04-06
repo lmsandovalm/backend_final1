@@ -18,6 +18,7 @@ router.register(r'respuestasact', RespuestaActViewSet, basename='respuestaact')
 urlpatterns = [
     path('register/', RegisterViewSet.as_view(), name='register'),
     path('login/', LoginViewSet.as_view(), name='login'),
+    path('users/', UserProfileList.as_view(), name='user-list'),
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
