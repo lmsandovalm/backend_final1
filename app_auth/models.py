@@ -22,17 +22,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email' 
 
 
-
-class UserProfile(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-
-    bio = models.TextField(blank=True)
-    avatar = models.ImageField(upload_to='avatars/', blank=True)
-
-    def __str__(self):
-        return f"{self.user.name} - {self.user.email}"
-
-
 ##########################################################
 ################ Preguntas y Respuestas ##################
 ##########################################################

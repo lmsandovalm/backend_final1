@@ -41,10 +41,6 @@ class LoginViewSet(generics.GenericAPIView):
             'user': RegisterSerializer(user).data
         }, status=status.HTTP_200_OK)
     
-class UserProfileList(generics.ListAPIView):
-    queryset = UserProfile.objects.all()
-    serializer_class = UserProfileSerializer
-
 class CursoViewSet(viewsets.ModelViewSet):
     queryset = Curso.objects.all()
     serializer_class = CursoSerializer
