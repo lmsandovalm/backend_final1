@@ -31,7 +31,8 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', default='my secret key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'Render' not in os.environ
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 
 if RENDER_EXTERNAL_HOSTNAME:
@@ -52,9 +53,9 @@ INSTALLED_APPS = [
     'corsheaders'
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-]
+CORS_ORIGIN_ALLOW_ALL = True
+
+
 
 CORS_ALLOW_METHODS = [
     'GET',
@@ -79,6 +80,7 @@ CORS_ALLOW_HEADERS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     #
     'whitenoise.middleware.WhiteNoiseMiddleware',
     #
