@@ -81,7 +81,7 @@ class Tematica(models.Model):
     contenido_tematica = models.TextField()
 
     def __str__(self):
-        return f"curso {self.id_curso} Tema {self.nombre_tematica} del curso {self.id_curso}"
+        return f"curso {self.id_curso}"
     
     
 
