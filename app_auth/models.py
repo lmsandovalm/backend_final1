@@ -81,10 +81,8 @@ class Tematica(models.Model):
     contenido_tematica = models.TextField()
 
     def __str__(self):
-        return f"curso {self.id_curso}"
+        return self.nombre_tematica
 
-    
-    
 
 ##########################################################
 ###################### Actividades #######################
@@ -97,7 +95,7 @@ class ActividadIA(models.Model):
     archivos = models.FileField(upload_to='actividades')
 
     def __str__(self):
-        return f"Actividad de IA para el tema {self.id_tematica}"
+        return self.id_tematica.nombre_tematica
 
 
 class RespuestaAct(models.Model):
@@ -109,5 +107,12 @@ class RespuestaAct(models.Model):
     calificacion_progreso   = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Respuesta a la actividad de IA ({self.id_actividadIA}): {self.calificacion_progreso}"
+        return f"({self.id_actividadIA}): {self.calificacion_progreso}"
+
+
+
+##########################################################
+###################### ConsumoMovil #######################
+##########################################################
+
 
