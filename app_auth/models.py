@@ -99,6 +99,7 @@ class ActividadIA(models.Model):
     def __str__(self):
         return f"Actividad de IA para el tema {self.id_tematica}"
 
+
 class RespuestaAct(models.Model):
     id_actividadIA          = models.ForeignKey(ActividadIA, on_delete=models.CASCADE)
     id_perfil               = models.PositiveBigIntegerField(null=True, blank=True)  
