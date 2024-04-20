@@ -59,7 +59,6 @@ class TematicaSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Tematica
         fields = '__all__'
-        depth = 1
 
 class PreguntaSerializer(serializers.ModelSerializer):
     class Meta:
