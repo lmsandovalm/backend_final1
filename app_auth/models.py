@@ -123,7 +123,7 @@ class PreguntaMovil(models.Model):
         return self.texto_pregunta
 
 class RespuestaMovil(models.Model):
-    pregunta = models.ForeignKey(Pregunta, on_delete=models.CASCADE, related_name='respuestas')
+    pregunta = models.ForeignKey(PreguntaMovil, on_delete=models.CASCADE, related_name='respuestas')
     texto_respuesta = models.CharField(max_length=200)
     es_correcta = models.BooleanField(default=False)
 
