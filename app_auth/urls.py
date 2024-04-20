@@ -13,6 +13,8 @@ router.register(r'resultados', ResultadoViewSet, basename='resultado')
 router.register(r'inscripciones', InscripcionViewSet, basename='inscripcion')
 router.register(r'actividadesia', ActividadIAViewSet, basename='actividadia')
 router.register(r'respuestasact', RespuestaActViewSet, basename='respuestaact')
+router.register(r'preguntaMovil', PreguntaMovilViewSet, basename='preguntaMovil')
+router.register(r'respuestaMovil', RespuestaMovilViewSet, basename='respuestaMovil')
 
 
 urlpatterns = [

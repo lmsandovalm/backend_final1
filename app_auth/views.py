@@ -73,3 +73,11 @@ class ActividadIAViewSet(viewsets.ModelViewSet):
 class RespuestaActViewSet(viewsets.ModelViewSet):
     queryset = RespuestaAct.objects.all()
     serializer_class = RespuestaActSerializer
+
+class PreguntaMovilViewSet(viewsets.ModelViewSet):
+    queryset = PreguntaMovil.objects.all()
+    serializer_class = PreguntaMovilSerializer
+
+class RespuestaMovilViewSet(viewsets.ModelViewSet):
+    queryset = RespuestaMovil.objects.all()
+    serializer_class = RespuestaMovilSerializer

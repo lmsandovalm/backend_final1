@@ -115,4 +115,17 @@ class RespuestaAct(models.Model):
 ###################### ConsumoMovil #######################
 ##########################################################
 
+class PreguntaMovil(models.Model):
+    texto_pregunta = models.CharField(max_length=200)
+    tematica = models.ForeignKey(Tematica, on_delete=models.CASCADE, related_name='preguntas')
 
+    def __str__(self):
+        return self.texto_pregunta
+
+class RespuestaMovil(models.Model):
+    pregunta = models.ForeignKey(Pregunta, on_delete=models.CASCADE, related_name='respuestas')
+    texto_respuesta = models.CharField(max_length=200)
+    es_correcta = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.texto_respuesta

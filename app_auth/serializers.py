@@ -91,3 +91,15 @@ class RespuestaActSerializer(serializers.ModelSerializer):
     class Meta:
         model = RespuestaAct
         fields = '__all__'
+
+class RespuestaMovilSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RespuestaMovil
+        fields = '__all__'
+
+class PreguntaMovilSerializer(serializers.ModelSerializer):
+    respuestas = RespuestaMovilSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = PreguntaMovil
+        fields = '__all__'
