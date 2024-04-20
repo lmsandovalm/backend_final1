@@ -76,12 +76,13 @@ class Inscripcion(models.Model):
 
 
 class Tematica(models.Model):
-    curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
+    curso_id = models.ForeignKey(Curso, on_delete=models.CASCADE)
     nombre_tematica = models.CharField(max_length=50)
     contenido_tematica = models.TextField()
 
     def __str__(self):
-        return f"curso {self.curso}"
+        return f"curso {self.curso_id}"
+
     
     
 
