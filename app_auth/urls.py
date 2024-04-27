@@ -5,6 +5,7 @@ from .models import *
 from rest_framework import routers
 
 router = routers.DefaultRouter()
+
 router.register(r'cursos', CursoViewSet, basename='curso')
 router.register(r'tematicas', TematicaViewSet, basename='tematica')
 router.register(r'preguntas', PreguntaViewSet, basename='pregunta')
@@ -18,6 +19,7 @@ router.register(r'respuestaMovil', RespuestaMovilViewSet, basename='respuestaMov
 
 
 urlpatterns = [
+    path('profiles/<int:pk>/', UserProfileViewSet.as_view(), name='userprofile-detail'),
     path('register/', RegisterViewSet.as_view(), name='register'),
     path('login/', LoginViewSet.as_view(), name='login'),
     path('api/', include(router.urls)),

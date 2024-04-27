@@ -21,6 +21,18 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     
     USERNAME_FIELD = 'email' 
 
+##########################################################
+################ Perfil Usuario ##########################
+##########################################################
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    profile_picture = models.ImageField(upload_to='profile_pics/')
+    description = models.TextField()
+    
+    def __str__(self):
+        return self.user.name
+
 
 ##########################################################
 ################ Preguntas y Respuestas ##################
@@ -66,14 +78,6 @@ class Curso(models.Model):
     def __str__(self):
         return self.nombre_curso
 
-class Inscripcion(models.Model): 
-    usuario = models.ForeignKey(CustomUser, null=False, on_delete=models.CASCADE, default=1)
-    curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
-    fecha_inscripcion = models.DateField()
-
-    def __str__(self):
-        return f"Inscripción de {self.usuario} en curso {self.curso}"
-
 
 class Tematica(models.Model):
     id_curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
@@ -83,6 +87,15 @@ class Tematica(models.Model):
     def __str__(self):
         return self.nombre_tematica
 
+
+class Inscripcion(models.Model): 
+    usuario = models.ForeignKey(CustomUser, null=False, on_delete=models.CASCADE, default=1)
+    curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
+    fecha_inscripcion = models.DateField()
+
+    def __str__(self):
+        return f"Inscripción de {self.usuario} en curso {self.curso}"
+    
 
 ##########################################################
 ###################### Actividades #######################

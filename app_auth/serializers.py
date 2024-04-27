@@ -49,6 +49,11 @@ class LoginSerializer(serializers.Serializer):
 
         data['user'] = user
         return data
+    
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = '__all__'
 
 class CursoSerializer(serializers.ModelSerializer):
     class Meta:
