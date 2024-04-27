@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from .managers.user import CustomUserManager
 
@@ -26,12 +27,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 ##########################################################
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    profile_picture = models.ImageField(upload_to='profile_pics/')
-    description = models.TextField()
-    
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    bio = models.TextField(max_length=500, blank=True)
+    profile_picture = models.ImageField(upload_to='profile_pics', blank=True)
+
     def __str__(self):
-        return self.user.name
+        return self.user.email if self.user else 'UserProfile'
+
 
 
 ##########################################################

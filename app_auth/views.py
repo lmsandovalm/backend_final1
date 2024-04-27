@@ -1,5 +1,6 @@
 from rest_framework import generics
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import *
@@ -41,9 +42,12 @@ class LoginViewSet(generics.GenericAPIView):
             'user': RegisterSerializer(user).data
         }, status=status.HTTP_200_OK)
     
-class UserProfileViewSet(generics.RetrieveUpdateDestroyAPIView):
+
+class UserProfileDetail(generics.RetrieveUpdateAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
+    permission_classes = [IsAuthenticated]
+    
     
 class CursoViewSet(viewsets.ModelViewSet):
     queryset = Curso.objects.all()
