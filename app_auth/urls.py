@@ -19,7 +19,7 @@ router.register(r'respuestaMovil', RespuestaMovilViewSet, basename='respuestaMov
 
 
 urlpatterns = [
-    path('profiles/<int:pk>/', UserProfileViewSet.as_view(), name='userprofile-detail'),
+    path('profiles/', UserProfileViewSet.as_view(), name='userprofile'),
     path('register/', RegisterViewSet.as_view(), name='register'),
     path('login/', LoginViewSet.as_view(), name='login'),
     path('api/', include(router.urls)),
