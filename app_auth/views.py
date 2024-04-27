@@ -44,9 +44,28 @@ class LoginViewSet(generics.GenericAPIView):
     
 
 class UserProfileDetail(generics.RetrieveUpdateAPIView):
-    queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        # Obtener el perfil de usuario del usuario autenticado
+        try:
+            return self.request.user
+        except UserProfile.DoesNotExist:
+            # Si el perfil de usuario no existe, crear uno nuevo
+            return UserProfile.objects.create(user=self.request.user)
+
+    def get_queryset(self):
+        # Devolver solo el perfil del usuario autenticado
+        return UserProfile.objects.filter(user=self.request.user)
+
+    def update(self, request, *args, **kwargs):
+        # Obtener el perfil de usuario del usuario autenticado
+        user_profile = self.get_object()
+        serializer = self.get_serializer(user_profile, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()  # Guardar el perfil actualizado
+        return Response(serializer.data)
     
     
 class CursoViewSet(viewsets.ModelViewSet):
