@@ -84,12 +84,9 @@ class TematicaViewSet(viewsets.ModelViewSet):
     queryset = Tematica.objects.all()
     serializer_class = TematicaSerializer
 
-class TematicaPreguntasList(viewsets.ModelViewSet):
-    serializer_class = PreguntaMovilSerializer
-
     def get_queryset(self):
-        tematica_id = self.kwargs['pk']
-        return Pregunta.objects.filter(tematica_id=tematica_id)
+        queryset = super().get_queryset()
+        return queryset.prefetch_related('preguntas')
 
 class PreguntaViewSet(viewsets.ModelViewSet):
     queryset = Pregunta.objects.all()
