@@ -93,7 +93,7 @@ class Curso(models.Model):
 
 
 class Tematica(models.Model):
-    id_curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
+    id_curso = models.ForeignKey(Curso, on_delete=models.CASCADE, related_name='tematicas')
     nombre_tematica = models.CharField(max_length=50)
     contenido_tematica = models.TextField()
 

@@ -67,13 +67,15 @@ class PreguntaMovilSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class TematicaSerializer(serializers.HyperlinkedModelSerializer):
+    id_tematica = serializers.IntegerField(source='id', read_only=True)
     preguntas = PreguntaMovilSerializer(many=True, read_only=True)
     
     class Meta:
         model = Tematica
         fields = '__all__'
 
-class CursoSerializer(serializers.ModelSerializer):
+class CursoSerializer(serializers.HyperlinkedModelSerializer):
+    id_curso = serializers.IntegerField(source='id', read_only=True)
     tematicas = TematicaSerializer(many=True, read_only=True)
     
     class Meta:

@@ -68,10 +68,6 @@ class UserProfileDetail(generics.RetrieveUpdateAPIView):
         return Response(serializer.data)
     
     
-class CursoViewSet(viewsets.ModelViewSet):
-    queryset = Curso.objects.all()
-    serializer_class = CursoSerializer
-    
 class PreguntaMovilViewSet(viewsets.ModelViewSet):
     queryset = PreguntaMovil.objects.all()
     serializer_class = PreguntaMovilSerializer
@@ -87,6 +83,14 @@ class TematicaViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.prefetch_related('preguntas')
+    
+class CursoViewSet(viewsets.ModelViewSet):
+    queryset = Curso.objects.all()
+    serializer_class = CursoSerializer       
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.prefetch_related('tematicas')
 
 class PreguntaViewSet(viewsets.ModelViewSet):
     queryset = Pregunta.objects.all()
