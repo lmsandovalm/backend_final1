@@ -34,7 +34,7 @@ class UserProfile(models.Model):
     profile_picture = models.ImageField(upload_to='profile_pics', blank=True)
 
     def __str__(self):
-        return self.user if self.user else 'UserProfile'
+        return self.userprofile if self.userprofile else 'UserProfile'
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -155,3 +155,4 @@ class RespuestaMovil(models.Model):
 
     def __str__(self):
         return self.texto_respuesta
+

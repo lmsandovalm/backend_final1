@@ -8,6 +8,7 @@ router = routers.DefaultRouter()
 
 router.register(r'cursos', CursoViewSet, basename='curso')
 router.register(r'tematicas', TematicaViewSet, basename='tematica')
+router.register(r'tematicaPreguntaLista', TematicaPreguntasList, basename='tematicaPreguntasList')
 router.register(r'preguntas', PreguntaViewSet, basename='pregunta')
 router.register(r'respuestas', RespuestaViewSet, basename='respuesta')
 router.register(r'resultados', ResultadoViewSet, basename='resultado')

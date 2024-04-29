@@ -54,16 +54,32 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = UserProfile
         fields = '__all__'
 
-class CursoSerializer(serializers.ModelSerializer):
+class RespuestaMovilSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Curso
+        model = RespuestaMovil
         fields = '__all__'
-        
-class TematicaSerializer(serializers.HyperlinkedModelSerializer): 
+
+class PreguntaMovilSerializer(serializers.ModelSerializer):
+    respuestas = RespuestaMovilSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = PreguntaMovil
+        fields = '__all__'
+
+class TematicaSerializer(serializers.HyperlinkedModelSerializer):
+    preguntas = PreguntaMovilSerializer(many=True, read_only=True)
+    
     class Meta:
         model = Tematica
         fields = '__all__'
 
+class CursoSerializer(serializers.ModelSerializer):
+    tematicas = TematicaSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = Curso
+        fields = '__all__'
+        
 class PreguntaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pregunta
@@ -96,14 +112,3 @@ class RespuestaActSerializer(serializers.ModelSerializer):
         model = RespuestaAct
         fields = '__all__'
 
-class RespuestaMovilSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = RespuestaMovil
-        fields = '__all__'
-
-class PreguntaMovilSerializer(serializers.ModelSerializer):
-    respuestas = RespuestaMovilSerializer(many=True, read_only=True)
-    
-    class Meta:
-        model = PreguntaMovil
-        fields = '__all__'

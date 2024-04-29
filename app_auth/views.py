@@ -45,7 +45,7 @@ class LoginViewSet(generics.GenericAPIView):
 
 class UserProfileDetail(generics.RetrieveUpdateAPIView):
     serializer_class = UserProfileSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def get_object(self):
         # Obtener el perfil de usuario del usuario autenticado
@@ -71,11 +71,26 @@ class UserProfileDetail(generics.RetrieveUpdateAPIView):
 class CursoViewSet(viewsets.ModelViewSet):
     queryset = Curso.objects.all()
     serializer_class = CursoSerializer
+    
+class PreguntaMovilViewSet(viewsets.ModelViewSet):
+    queryset = PreguntaMovil.objects.all()
+    serializer_class = PreguntaMovilSerializer
+
+class RespuestaMovilViewSet(viewsets.ModelViewSet):
+    queryset = RespuestaMovil.objects.all()
+    serializer_class = RespuestaMovilSerializer
 
 class TematicaViewSet(viewsets.ModelViewSet):
     queryset = Tematica.objects.all()
     serializer_class = TematicaSerializer
-    
+
+class TematicaPreguntasList(viewsets.ModelViewSet):
+    serializer_class = PreguntaMovilSerializer
+
+    def get_queryset(self):
+        tematica_id = self.kwargs['pk']
+        return Pregunta.objects.filter(tematica_id=tematica_id)
+
 class PreguntaViewSet(viewsets.ModelViewSet):
     queryset = Pregunta.objects.all()
     serializer_class = PreguntaSerializer
@@ -101,10 +116,3 @@ class RespuestaActViewSet(viewsets.ModelViewSet):
     queryset = RespuestaAct.objects.all()
     serializer_class = RespuestaActSerializer
 
-class PreguntaMovilViewSet(viewsets.ModelViewSet):
-    queryset = PreguntaMovil.objects.all()
-    serializer_class = PreguntaMovilSerializer
-
-class RespuestaMovilViewSet(viewsets.ModelViewSet):
-    queryset = RespuestaMovil.objects.all()
-    serializer_class = RespuestaMovilSerializer
