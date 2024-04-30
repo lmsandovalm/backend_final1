@@ -63,7 +63,7 @@ class Respuesta(models.Model):
         ("auditivo","Auditivo"),
         ("visual","Visual"),
     )
-    id_pregunta = models.ForeignKey(Pregunta, on_delete=models.CASCADE)
+    id_pregunta = models.ForeignKey(Pregunta, on_delete=models.CASCADE, related_name='respuestaFormulario')
     texto_respuesta = models.CharField(max_length=200)
     estilo = models.CharField(max_length=20, choices = estilos)
 

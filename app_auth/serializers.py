@@ -81,16 +81,20 @@ class CursoSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Curso
         fields = '__all__'
-        
-class PreguntaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Pregunta
-        fields = '__all__'
 
 class RespuestaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Respuesta 
         fields = '__all__'
+        
+class PreguntaSerializer(serializers.HyperlinkedModelSerializer):
+    id_pregunta = serializers.IntegerField(source='id', read_only=True)
+    respuestaFormulario = RespuestaSerializer(many=True, read_only=True)  
+    
+    class Meta:
+        model = Pregunta
+        fields = '__all__'
+
         
         
 class ResultadoSerializer(serializers.ModelSerializer):

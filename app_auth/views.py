@@ -95,10 +95,15 @@ class CursoViewSet(viewsets.ModelViewSet):
 class PreguntaViewSet(viewsets.ModelViewSet):
     queryset = Pregunta.objects.all()
     serializer_class = PreguntaSerializer
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.prefetch_related('respuestaFormulario')
 
 class RespuestaViewSet(viewsets.ModelViewSet): 
     queryset = Respuesta.objects.all()
     serializer_class = RespuestaSerializer
+
 
     
 class ResultadoViewSet(viewsets.ModelViewSet):
