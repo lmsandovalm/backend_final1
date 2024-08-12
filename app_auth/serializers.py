@@ -1,30 +1,44 @@
 from rest_framework import serializers
 from .models import *
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.contrib.auth import authenticate
 
 
 class RegisterSerializer(serializers.ModelSerializer):
+    
+    password = serializers.CharField(write_only=True, required=True)
+    password_confirmation = serializers.CharField(write_only=True, required=True)
+    
     class Meta:
         model = CustomUser
         fields = '__all__'
-        extra_kwargs = {'password': {'write_only': True}}
+
+    def validate(self, data):
+        password = data.get('password')
+        password_confirmation = data.get('password_confirmation')
+
+        if password != password_confirmation:
+            raise serializers.ValidationError({'password': 'Las contraseñas no coinciden.'})
+
+        return data
 
     def create(self, validated_data):
+        password = validated_data.pop('password')
         user = CustomUser.objects.create_user(**validated_data)
+        user.set_password(password)
+        user.save()
+        
         role = validated_data.get('role')
-        group, _ = Group.objects.get_or_create(name=role)
-
-        group.user_set.add(user)
 
         if role == 'admin':
             user.is_staff = True
             user.save()
-            pass
-        elif role == 'instructor':
-            pass
-        elif role == 'aprendiz':
-            pass
+            admin_group = Group.objects.get(name='admin')
+            user.groups.add(admin_group)
+        elif role == 'usuarios':
+            user_group = Group.objects.get(name='usuarios')
+            user.groups.add(user_group)
 
         return user
 
@@ -41,80 +55,11 @@ class LoginSerializer(serializers.Serializer):
             user = authenticate(email=email, password=password)
 
             if not user:
-                raise serializers.ValidationError('Invalid email or password.')
+                raise serializers.ValidationError('Email o contraseña invalidos.')
 
         else:
-            raise serializers.ValidationError('Must include "email" and "password".')
+            raise serializers.ValidationError('Debe incluir "email" y "contraseña".')
 
         data['user'] = user
         return data
     
-class UserProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserProfile
-        fields = '__all__'
-
-class RespuestaMovilSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = RespuestaMovil
-        fields = '__all__'
-
-class PreguntaMovilSerializer(serializers.ModelSerializer):
-    respuestas = RespuestaMovilSerializer(many=True, read_only=True)
-    
-    class Meta:
-        model = PreguntaMovil
-        fields = '__all__'
-
-class TematicaSerializer(serializers.HyperlinkedModelSerializer):
-    id_tematica = serializers.IntegerField(source='id', read_only=True)
-    preguntas = PreguntaMovilSerializer(many=True, read_only=True)
-    
-    class Meta:
-        model = Tematica
-        fields = '__all__'
-
-class CursoSerializer(serializers.HyperlinkedModelSerializer):
-    id_curso = serializers.IntegerField(source='id', read_only=True)
-    tematicas = TematicaSerializer(many=True, read_only=True)
-    
-    class Meta:
-        model = Curso
-        fields = '__all__'
-
-class RespuestaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Respuesta 
-        fields = '__all__'
-        
-class PreguntaSerializer(serializers.HyperlinkedModelSerializer):
-    id_pregunta = serializers.IntegerField(source='id', read_only=True)
-    respuestaFormulario = RespuestaSerializer(many=True, read_only=True)  
-    
-    class Meta:
-        model = Pregunta
-        fields = '__all__'
-
-        
-        
-class ResultadoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Resultado
-        fields = '__all__'
-        
-class InscripcionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Inscripcion
-        fields = '__all__'
-        
-        
-class ActividadIASerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ActividadIA 
-        fields = '__all__'
-        
-class RespuestaActSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = RespuestaAct
-        fields = '__all__'
-
